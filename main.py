@@ -87,3 +87,10 @@ finally:
 # 수집한 데이터 출력
 for info in product_info:
     print(info)
+
+import csv
+with open('danawa.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['NAME', 'PRICE', 'PEOPLE'])
+    for i in range(len(product_info)):
+        writer.writerow([product_info[i]['name'], product_info[i]['price'], ', '.join(str(i) for i in product_info[i]['people'])])
