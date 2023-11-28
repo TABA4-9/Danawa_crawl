@@ -90,7 +90,19 @@ for info in product_info:
 
 import csv
 with open('danawa.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['NAME', 'PRICE', 'PEOPLE'])
+    fieldnames = ['NAME', 'PRICE', 'PEOPLE']
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+    
     for i in range(len(product_info)):
-        writer.writerow([product_info[i]['name'], product_info[i]['price'], ', '.join(str(i) for i in product_info[i]['people'])])
+        people = len(product_info[i]['people'])
+        
+        if people >= 2: # n >= 2
+            for _ in range(people):            
+                writer.writerow({'NAME':product_info[i]['name'], 'PRICE':product_info[i]['price'], 'PEOPLE':product_info[i]['people'].pop(0)})
+                
+        elif people == 1: # n = 1
+            writer.writerow({'NAME':product_info[i]['name'], 'PRICE':product_info[i]['price'], 'PEOPLE':product_info[i]['people'].pop()})
+            
+        elif people == 0: # n = 0
+            writer.writerow({'NAME':product_info[i]['name'], 'PRICE':product_info[i]['price'], 'PEOPLE':None})
