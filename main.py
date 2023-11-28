@@ -95,14 +95,16 @@ with open('danawa.csv', 'w', newline='') as file:
     writer.writeheader()
     
     for i in range(len(product_info)):
+        
+        if product_info[i]['price'] == '' or len(product_info[i]['people']) == 0:
+            continue
+        
         people = len(product_info[i]['people'])
         
         if people >= 2: # n >= 2
-            for _ in range(people):            
-                writer.writerow({'NAME':product_info[i]['name'], 'PRICE':product_info[i]['price'], 'PEOPLE':product_info[i]['people'].pop(0)})
+            for _ in range(people):
+                writer.writerow({'NAME':product_info[i]['name'], 'PRICE':int(product_info[i]['price']), 'PEOPLE':product_info[i]['people'].pop(0)})
                 
         elif people == 1: # n = 1
-            writer.writerow({'NAME':product_info[i]['name'], 'PRICE':product_info[i]['price'], 'PEOPLE':product_info[i]['people'].pop()})
-            
-        elif people == 0: # n = 0
-            writer.writerow({'NAME':product_info[i]['name'], 'PRICE':product_info[i]['price'], 'PEOPLE':None})
+            writer.writerow({'NAME':product_info[i]['name'], 'PRICE':int(product_info[i]['price']), 'PEOPLE':product_info[i]['people'].pop()})
+
