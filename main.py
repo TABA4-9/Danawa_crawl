@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 from selenium.common.exceptions import NoSuchElementException
 import re
 import time
@@ -15,8 +18,12 @@ def extract_and_expand_numbers(de):
         return matches
 
 
+options = webdriver.ChromeOptions()
+
+options.add_argument("headless")
+
 # WebDriver 설정
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # 웹사이트 접속
 driver.get("https://prod.danawa.com/list/?cate=132437")
